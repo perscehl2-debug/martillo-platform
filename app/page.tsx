@@ -3,13 +3,16 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { AuctionCard } from '@/components/auctions/AuctionCard'
 
-const CarScene = dynamic(() => import('@/components/3d/CarScene').then(m => ({ default: m.CarScene })), {
+// KlingHero: usa imágenes reales generadas con Kling AI + video animado cuando esté disponible
+const KlingHero = dynamic(() => import('@/components/3d/KlingHero').then(m => ({ default: m.KlingHero })), {
   ssr: false,
   loading: () => (
-    <div className="h-screen bg-[#050508] flex items-center justify-center">
-      <div className="text-center">
-        <div className="w-12 h-12 border-2 border-[#c8902a] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-        <p className="text-gray-500 text-sm tracking-widest uppercase">Cargando escena</p>
+    <div className="h-screen bg-black flex items-center justify-center" style={{ height: '500vh' }}>
+      <div className="sticky top-0 h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-2 border-[#c8902a] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-500 text-sm tracking-widest uppercase">Cargando</p>
+        </div>
       </div>
     </div>
   ),
@@ -24,7 +27,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <CarScene />
+      <KlingHero />
       <div className="bg-[#04060d]">
         {/* AUTOS */}
         <section className="max-w-7xl mx-auto px-4 py-24">
