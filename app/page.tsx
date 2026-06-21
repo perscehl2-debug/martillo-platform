@@ -204,23 +204,46 @@ export default async function HomePage() {
 
         {/* COMO FUNCIONA */}
         <section className="max-w-screen-xl mx-auto px-6 md:px-12 py-28">
-          <div className="mb-16">
-            <p className="text-[10px] tracking-[0.4em] text-amber-500/60 uppercase mb-4 font-mono">El proceso</p>
-            <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">Cómo funciona</h2>
+          <div className="flex items-end justify-between mb-16 flex-wrap gap-4">
+            <div>
+              <p className="text-[10px] tracking-[0.4em] text-amber-500/60 uppercase mb-4 font-mono">El proceso</p>
+              <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">Cómo funciona</h2>
+            </div>
+            <Link href="/como-funciona" className="text-xs text-gray-500 hover:text-amber-400 tracking-widest uppercase transition-colors">
+              Ver proceso completo →
+            </Link>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-5 gap-4">
             {[
-              { n: '01', t: 'Verificación', d: 'Crea tu cuenta y verifica tu identidad. El proceso toma menos de 2 minutos.' },
-              { n: '02', t: 'Puja en tiempo real', d: 'Explora el catálogo y haz tus ofertas. Recibe alertas si alguien te supera.' },
-              { n: '03', t: 'Adjudicación', d: 'Si ganas, coordinamos contigo la transferencia y entrega del bien.' },
+              { n: '01', t: 'Regístrate', d: 'Crea tu cuenta con email y contraseña en menos de 2 minutos.' },
+              { n: '02', t: 'Transfiere garantía', d: 'Abona antes de las 10 AM del remate. Si no adjudicas, te devolvemos el 100%.', highlight: true },
+              { n: '03', t: 'Puja en vivo', d: 'Accede al remate y realiza tus ofertas en tiempo real.' },
+              { n: '04', t: 'Adjudicación', d: 'Si ganas, recibes las instrucciones de pago en 4 horas.' },
+              { n: '05', t: 'Pago y entrega', d: 'Completa el pago y coordinamos la entrega del bien.' },
             ].map(s => (
-              <div key={s.n} className="relative border border-white/6 rounded-lg p-8 hover:border-amber-500/20 transition-colors">
-                <span className="absolute top-6 right-6 text-6xl font-black text-white/4 select-none">{s.n}</span>
-                <p className="text-[10px] text-amber-500/60 font-mono tracking-widest uppercase mb-4">{s.n}</p>
-                <h3 className="text-lg font-bold text-white mb-3">{s.t}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{s.d}</p>
+              <div key={s.n} className={`relative rounded-lg p-6 transition-colors ${
+                (s as any).highlight
+                  ? 'border border-amber-500/30 bg-amber-500/5'
+                  : 'border border-white/6 hover:border-white/12'
+              }`}>
+                {(s as any).highlight && (
+                  <span className="absolute -top-px left-4 px-2 py-0.5 bg-amber-500 text-black text-[9px] font-black tracking-widest uppercase rounded-b-sm">
+                    Importante
+                  </span>
+                )}
+                <span className="block text-4xl font-black text-white/8 select-none mb-3">{s.n}</span>
+                <h3 className="text-sm font-bold text-white mb-2">{s.t}</h3>
+                <p className="text-xs text-gray-500 leading-relaxed">{s.d}</p>
               </div>
             ))}
+          </div>
+          <div className="mt-8 border border-amber-500/15 rounded-lg px-7 py-5 bg-amber-500/3 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <p className="text-sm text-amber-400/80">
+              Recuerda: si no adjudicas, devolvemos el <strong className="text-amber-400">100% de tu garantía</strong> el lunes siguiente al remate.
+            </p>
+            <Link href="/como-funciona" className="text-xs text-amber-400 hover:text-amber-300 tracking-widest uppercase whitespace-nowrap transition-colors">
+              Ver montos y datos bancarios →
+            </Link>
           </div>
         </section>
 
@@ -249,17 +272,48 @@ export default async function HomePage() {
         </section>
 
         {/* FOOTER */}
-        <footer className="border-t border-white/5 py-12">
-          <div className="max-w-screen-xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-7 h-7 bg-amber-500 rounded flex items-center justify-center text-black font-black text-xs">M</div>
-              <span className="font-black text-sm text-white tracking-wider">MARTILLO</span>
+        <footer className="border-t border-white/5 py-14">
+          <div className="max-w-screen-xl mx-auto px-6 md:px-12">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+              <div className="col-span-2 md:col-span-1">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-7 h-7 bg-amber-500 rounded flex items-center justify-center text-black font-black text-xs">M</div>
+                  <span className="font-black text-sm text-white tracking-wider">MARTILLO</span>
+                </div>
+                <p className="text-xs text-gray-600 leading-relaxed">Plataforma de remates premium de automóviles y viviendas en Chile.</p>
+              </div>
+              <div>
+                <p className="text-[10px] text-white/20 uppercase tracking-widest mb-4">Remates</p>
+                <div className="space-y-2">
+                  <Link href="/auctions?type=auto" className="block text-xs text-gray-600 hover:text-gray-400 transition-colors">Automóviles</Link>
+                  <Link href="/auctions?type=vivienda" className="block text-xs text-gray-600 hover:text-gray-400 transition-colors">Propiedades</Link>
+                  <Link href="/auctions" className="block text-xs text-gray-600 hover:text-gray-400 transition-colors">Todos los lotes</Link>
+                </div>
+              </div>
+              <div>
+                <p className="text-[10px] text-white/20 uppercase tracking-widest mb-4">Información</p>
+                <div className="space-y-2">
+                  <Link href="/como-funciona" className="block text-xs text-gray-600 hover:text-gray-400 transition-colors">¿Cómo funciona?</Link>
+                  <Link href="/quienes-somos" className="block text-xs text-gray-600 hover:text-gray-400 transition-colors">Quiénes somos</Link>
+                  <Link href="/preguntas-frecuentes" className="block text-xs text-gray-600 hover:text-gray-400 transition-colors">Preguntas frecuentes</Link>
+                  <Link href="/contacto" className="block text-xs text-gray-600 hover:text-gray-400 transition-colors">Contacto</Link>
+                </div>
+              </div>
+              <div>
+                <p className="text-[10px] text-white/20 uppercase tracking-widest mb-4">Legal</p>
+                <div className="space-y-2">
+                  <Link href="/terminos" className="block text-xs text-gray-600 hover:text-gray-400 transition-colors">Términos y condiciones</Link>
+                  <a href="/terminos" className="block text-xs text-gray-600 hover:text-gray-400 transition-colors">Política de privacidad</a>
+                </div>
+                <div className="mt-6 pt-4 border-t border-white/5">
+                  <p className="text-[10px] text-white/20 uppercase tracking-widest mb-3">Garantías</p>
+                  <a href="mailto:garantias@martillo.cl" className="text-xs text-amber-500/50 hover:text-amber-400 transition-colors">garantias@martillo.cl</a>
+                </div>
+              </div>
             </div>
-            <p className="text-xs text-gray-700 tracking-wider">© 2025 Martillo SpA · Santiago de Chile</p>
-            <div className="flex gap-6 text-xs text-gray-700 tracking-wider">
-              <a href="#" className="hover:text-gray-400 transition-colors">Términos</a>
-              <a href="#" className="hover:text-gray-400 transition-colors">Privacidad</a>
-              <a href="#" className="hover:text-gray-400 transition-colors">Contacto</a>
+            <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+              <p className="text-[11px] text-gray-700 tracking-wider">© 2025 Martillo SpA · RUT 77.123.456-7 · Santiago de Chile</p>
+              <p className="text-[11px] text-gray-700">info@martillo.cl · +56 2 2580 9200</p>
             </div>
           </div>
         </footer>

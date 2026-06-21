@@ -53,7 +53,7 @@ export function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden lg:flex items-center gap-6">
           <Link href="/auctions?type=auto" className="text-sm text-gray-400 hover:text-white transition-colors">
             Autos
           </Link>
@@ -61,11 +61,17 @@ export function Navbar() {
             Viviendas
           </Link>
           <Link href="/auctions" className="text-sm text-gray-400 hover:text-white transition-colors">
-            Todos los remates
+            Remates
+          </Link>
+          <Link href="/como-funciona" className="text-sm text-gray-400 hover:text-white transition-colors">
+            ¿Cómo funciona?
+          </Link>
+          <Link href="/quienes-somos" className="text-sm text-gray-400 hover:text-white transition-colors">
+            Quiénes somos
           </Link>
           {isAdmin && (
             <Link href="/admin" className="text-sm text-[#c8902a] hover:text-[#e8a830] transition-colors">
-              Panel Admin
+              Admin
             </Link>
           )}
         </div>
@@ -107,9 +113,13 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-[#070b18] border-t border-[#c8902a]/20 px-4 py-4 space-y-3">
+        <div className="lg:hidden bg-[#070b18] border-t border-[#c8902a]/20 px-4 py-4 space-y-3">
           <Link href="/auctions?type=auto" className="block text-gray-300 py-2" onClick={() => setMenuOpen(false)}>Autos</Link>
           <Link href="/auctions?type=vivienda" className="block text-gray-300 py-2" onClick={() => setMenuOpen(false)}>Viviendas</Link>
+          <Link href="/auctions" className="block text-gray-300 py-2" onClick={() => setMenuOpen(false)}>Todos los remates</Link>
+          <Link href="/como-funciona" className="block text-gray-300 py-2" onClick={() => setMenuOpen(false)}>¿Cómo funciona?</Link>
+          <Link href="/quienes-somos" className="block text-gray-300 py-2" onClick={() => setMenuOpen(false)}>Quiénes somos</Link>
+          <Link href="/preguntas-frecuentes" className="block text-gray-300 py-2" onClick={() => setMenuOpen(false)}>FAQ</Link>
           {isAdmin && <Link href="/admin" className="block text-[#c8902a] py-2" onClick={() => setMenuOpen(false)}>Panel Admin</Link>}
           {user ? (
             <button onClick={handleSignOut} className="block text-gray-400 py-2 w-full text-left">Cerrar sesión</button>
