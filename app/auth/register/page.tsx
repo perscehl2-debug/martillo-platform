@@ -54,7 +54,7 @@ export default function RegisterPage() {
         <div className="text-center mb-8">
           <div className="w-10 h-10 bg-[#c8902a] rounded mx-auto mb-4 flex items-center justify-center text-black font-black">M</div>
           <h1 className="text-2xl font-black text-white">Crear cuenta</h1>
-          <p className="text-gray-500 text-sm mt-1">Únete a la plataforma de remates premium</p>
+          <p className="text-gray-500 text-sm mt-1">Únete a la plataforma de remates online</p>
         </div>
 
         <div className="border border-white/10 rounded-xl p-8 bg-[#070b18]">

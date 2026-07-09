@@ -1,7 +1,8 @@
-import { createClient } from '@/lib/supabase/server'
+import { createPublicClient } from '@/lib/supabase/server'
 import { AuctionCard } from '@/components/auctions/AuctionCard'
 
 export const revalidate = 30
+export const dynamic = 'force-dynamic'
 
 interface PageProps {
   searchParams: Promise<{ type?: string; status?: string }>
@@ -9,7 +10,7 @@ interface PageProps {
 
 export default async function AuctionsPage({ searchParams }: PageProps) {
   const params = await searchParams
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   let query = supabase.from('auctions').select('*').eq('status', 'live').order('ends_at', { ascending: true })
   if (params.type === 'auto' || params.type === 'vivienda') query = query.eq('type', params.type)
@@ -31,8 +32,8 @@ export default async function AuctionsPage({ searchParams }: PageProps) {
           <div className="flex gap-2 flex-wrap">
             {[
               { label: 'Todos', type: '' },
-              { label: '🚗 Autos', type: 'auto' },
-              { label: '🏠 Viviendas', type: 'vivienda' },
+              { label: 'Autos', type: 'auto' },
+              { label: 'Viviendas', type: 'vivienda' },
             ].map(f => (
               <a key={f.type} href={f.type ? `/auctions?type=${f.type}` : '/auctions'}
                 className={`px-4 py-2 rounded-full text-sm transition-all ${
@@ -52,7 +53,6 @@ export default async function AuctionsPage({ searchParams }: PageProps) {
           </div>
         ) : (
           <div className="border border-white/10 rounded-xl p-16 text-center">
-            <p className="text-4xl mb-4">{params.type === 'auto' ? '🚗' : params.type === 'vivienda' ? '🏠' : '🏷️'}</p>
             <p className="text-gray-400 text-lg">No hay remates activos en este momento.</p>
             <p className="text-gray-600 text-sm mt-2">Vuelve pronto — publicamos nuevos remates cada semana.</p>
           </div>

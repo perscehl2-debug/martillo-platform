@@ -6,7 +6,7 @@ import { Navbar } from '@/components/layout/Navbar'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Martillo — Plataforma de Remates Premium',
+  title: 'Martillo — Remates Online Chile',
   description: 'Subastas en tiempo real de automóviles y viviendas en Chile.',
 }
 

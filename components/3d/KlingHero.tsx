@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 const CAR_SEQUENCE = [
-  { src: '/images/cars/car_rear.png', label: 'Ferrari 458 Italia', sub: 'Subasta premium' },
+  { src: '/images/cars/car_rear.png', label: 'Ferrari 458 Italia', sub: 'Remate en vivo' },
   { src: '/images/cars/car_1.png',    label: 'Motor V8 4.5L',      sub: '570 CV — 0 a 100 en 3.4s' },
   { src: '/images/cars/car_2.png',    label: 'Diseño exclusivo',   sub: 'Pintura Nero Daytona' },
   { src: '/images/cars/car_3.png',    label: 'Cada detalle',       sub: 'Carrocería de carbono' },
@@ -71,23 +71,23 @@ export function KlingHero() {
         ))}
 
         {/* Heading — fades out at 70% scroll */}
-        <div className="absolute inset-0 flex flex-col justify-end pb-24 px-10 md:px-20 pointer-events-none"
+        <div className="absolute inset-0 flex flex-col justify-end pb-20 md:pb-24 px-6 sm:px-10 md:px-20 pointer-events-none"
           style={{ opacity: Math.max(0, 1 - scrollProgress * 2.5) }}>
-          <p className="text-xs font-mono tracking-[0.5em] text-amber-400/70 uppercase mb-3">
+          <p className="text-[10px] sm:text-xs font-mono tracking-[0.3em] sm:tracking-[0.5em] text-amber-400/70 uppercase mb-3">
             {CAR_SEQUENCE[activeIdx]?.sub}
           </p>
-          <h1 className="text-6xl md:text-8xl font-black text-white tracking-tighter leading-none mb-3">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-white tracking-tighter leading-none mb-3">
             MARTILLO
           </h1>
-          <p className="text-base md:text-lg text-gray-400 max-w-lg font-light">
-            Plataforma de remates premium de automóviles y viviendas
+          <p className="text-sm sm:text-base md:text-lg text-gray-400 max-w-lg font-light">
+            Remates online de automóviles y viviendas en Chile
           </p>
         </div>
 
         {/* Car label — appears mid-scroll */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none"
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center pointer-events-none"
           style={{ opacity: scrollProgress > 0.2 && scrollProgress < 0.85 ? Math.min(1, (scrollProgress - 0.2) * 4) : 0 }}>
-          <p className="text-3xl md:text-5xl font-black text-white tracking-tight">{CAR_SEQUENCE[activeIdx]?.label}</p>
+          <p className="text-2xl sm:text-3xl md:text-5xl font-black text-white tracking-tight">{CAR_SEQUENCE[activeIdx]?.label}</p>
           <div className="w-12 h-0.5 bg-amber-400 mt-4 mx-auto" />
         </div>
 

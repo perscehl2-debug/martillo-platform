@@ -77,10 +77,10 @@ export function Navbar() {
         </div>
 
         {/* Auth */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3">
           {user ? (
             <>
-              <span className="text-xs text-gray-500 hidden lg:block">{user.email}</span>
+              <span className="text-xs text-gray-500 hidden xl:block">{user.email}</span>
               <button
                 onClick={handleSignOut}
                 className="text-sm px-4 py-2 rounded border border-[#c8902a]/40 text-gray-300 hover:text-white hover:border-[#c8902a] transition-all"
@@ -102,7 +102,7 @@ export function Navbar() {
         </div>
 
         {/* Mobile hamburger */}
-        <button className="md:hidden text-white p-2" onClick={() => setMenuOpen(!menuOpen)}>
+        <button className="lg:hidden text-white p-2" onClick={() => setMenuOpen(!menuOpen)}>
           <div className="space-y-1.5">
             <span className="block w-6 h-0.5 bg-white"/>
             <span className="block w-6 h-0.5 bg-white"/>

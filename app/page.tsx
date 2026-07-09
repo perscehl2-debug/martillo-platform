@@ -256,7 +256,7 @@ export default async function HomePage() {
               Tu próxima compra<br />comienza acá.
             </h2>
             <p className="text-gray-500 mb-12 leading-relaxed">
-              Únete a la plataforma de remates premium. Sin comisión hasta adjudicación.
+              Únete a Martillo y participa en remates de autos y viviendas. Sin comisión hasta adjudicación.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
               <Link href="/auth/register"
@@ -280,7 +280,7 @@ export default async function HomePage() {
                   <div className="w-7 h-7 bg-amber-500 rounded flex items-center justify-center text-black font-black text-xs">M</div>
                   <span className="font-black text-sm text-white tracking-wider">MARTILLO</span>
                 </div>
-                <p className="text-xs text-gray-600 leading-relaxed">Plataforma de remates premium de automóviles y viviendas en Chile.</p>
+                <p className="text-xs text-gray-600 leading-relaxed">Remates online de automóviles y viviendas en Chile.</p>
               </div>
               <div>
                 <p className="text-[10px] text-white/20 uppercase tracking-widest mb-4">Remates</p>

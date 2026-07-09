@@ -28,8 +28,29 @@ function Countdown({ endsAt }: { endsAt: string }) {
   return <span className="text-[#c8902a] font-mono text-sm font-bold">{timeLeft}</span>
 }
 
+const FALLBACK_IMAGES: Record<string, string> = {
+  'Porsche': '/images/auctions/porsche.png',
+  'Ferrari': '/images/auctions/ferrari.png',
+  'BMW':     '/images/auctions/bmw.png',
+  'Casa':    '/images/auctions/casa.png',
+  'Depto':   '/images/auctions/depto.png',
+  'Departamento': '/images/auctions/depto.png',
+  'Villa':   '/images/auctions/villa.png',
+  'Vitacura': '/images/auctions/villa.png',
+  'Condes':  '/images/auctions/casa.png',
+}
+
+function resolveImage(title: string, imageUrls: string[] | undefined, type: string) {
+  const ownImg = imageUrls?.find(u => u && !u.includes('unsplash'))
+  if (ownImg) return ownImg
+  for (const [key, path] of Object.entries(FALLBACK_IMAGES)) {
+    if (title.toLowerCase().includes(key.toLowerCase())) return path
+  }
+  return type === 'auto' ? '/images/auctions/porsche.png' : '/images/auctions/casa.png'
+}
+
 export function AuctionCard({ auction }: { auction: Auction }) {
-  const img = auction.image_urls?.[0] || 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600'
+  const img = resolveImage(auction.title, auction.image_urls, auction.type)
   const isAuto = auction.type === 'auto'
 
   return (
@@ -44,7 +65,7 @@ export function AuctionCard({ auction }: { auction: Auction }) {
           {/* Type badge */}
           <div className="absolute top-3 left-3">
             <span className={`text-xs font-bold px-2 py-1 rounded-full ${isAuto ? 'bg-blue-900/80 text-blue-300' : 'bg-emerald-900/80 text-emerald-300'}`}>
-              {isAuto ? '🚗 AUTO' : '🏠 VIVIENDA'}
+              {isAuto ? 'AUTOMÓVIL' : 'VIVIENDA'}
             </span>
           </div>
 

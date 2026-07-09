@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: '¿Quiénes somos? — Martillo Remates',
-  description: 'Martillo es la primera plataforma digital de remates premium de automóviles y viviendas en Chile. Transparencia, seguridad y eficiencia.',
+  description: 'Martillo es la primera plataforma digital de remates online de automóviles y viviendas en Chile. Transparencia, seguridad y eficiencia.',
 }
 
 const PILLARS = [
@@ -54,7 +54,7 @@ export default function QuienesSomosPage() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                Martillo es la primera plataforma digital de remates premium de automóviles y viviendas en Chile, diseñada para conectar compradores y vendedores en un entorno de subasta online totalmente transparente y en tiempo real.
+                Martillo es la primera plataforma digital de remates online de automóviles y viviendas en Chile, diseñada para conectar compradores y vendedores en un entorno de subasta online totalmente transparente y en tiempo real.
               </p>
               <p className="text-gray-500 text-sm leading-relaxed">
                 Creemos que las subastas deben ser accesibles, justas y seguras para todos. Por eso construimos una plataforma donde cada proceso — desde la publicación del lote hasta la transferencia del bien — está documentado, verificado y disponible para todos los participantes.
