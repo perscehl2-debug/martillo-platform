@@ -1,0 +1,44 @@
+# Aplica supabase/migrations/002_siniestros.sql a la base de Martillo.
+# Requiere el secreto SUPABASE_DB_URL (Supabase → Connect → "Session pooler",
+# con la contraseña de la base). Es idempotente: si las tablas ya existen, no hace nada.
+name: Migración siniestros
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - supabase/migrations/002_siniestros.sql
+      - .github/workflows/migracion-siniestros.yml
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verificar secreto
+        id: secreto
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          if [ -z "$SUPABASE_DB_URL" ]; then
+            echo "::warning::Falta el secreto SUPABASE_DB_URL; no se aplicó la migración."
+            echo "listo=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "listo=si" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Aplicar migración
+        if: steps.secreto.outputs.listo == 'si'
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          sudo apt-get install -y -qq postgresql-client >/dev/null
+          existe=$(psql "$SUPABASE_DB_URL" -tAc "SELECT to_regclass('public.casos_siniestro') IS NOT NULL")
+          if [ "$existe" = "t" ]; then
+            echo "La migración ya estaba aplicada; nada que hacer."
+          else
+            psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 --single-transaction -f supabase/migrations/002_siniestros.sql
+            echo "Migración aplicada."
+          fi
+          psql "$SUPABASE_DB_URL" -tAc "SELECT count(*) || ' tablas del módulo' FROM information_schema.tables WHERE table_schema='public' AND table_name IN ('usuarios','casos_siniestro','personas','documentos','informes','valores_uf')"
