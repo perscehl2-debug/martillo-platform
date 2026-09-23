@@ -3,7 +3,9 @@
 // key del entorno; no imprime contraseñas. Sin la variable, no hace nada.
 import { createClient } from '@supabase/supabase-js'
 
-const password = process.env.SINIESTROS_DEMO_PASSWORD
+// SINIESTROS_DEMO_USUARIOS (JSON [{email,nombre,rol,password}]) reemplaza la lista por defecto.
+const lista = process.env.SINIESTROS_DEMO_USUARIOS ? JSON.parse(process.env.SINIESTROS_DEMO_USUARIOS) : null
+const password = process.env.SINIESTROS_DEMO_PASSWORD ?? (lista ? 'por-usuario' : undefined)
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL
 const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 if (!password || !url || !serviceKey) {
@@ -11,7 +13,7 @@ if (!password || !url || !serviceKey) {
   process.exit(0)
 }
 
-const USUARIOS = [
+const USUARIOS = lista ?? [
   { email: 'supervisor@martillo-demo.cl', nombre: 'Supervisor Demo', rol: 'supervisor' },
   { email: 'supervisor2@martillo-demo.cl', nombre: 'Supervisora Demo 2', rol: 'supervisor' },
   { email: 'liquidador@martillo-demo.cl', nombre: 'Liquidador Demo', rol: 'liquidador' },
@@ -35,10 +37,10 @@ try {
   for (const u of USUARIOS) {
     let user = await buscar(u.email)
     if (user) {
-      const { error } = await admin.auth.admin.updateUserById(user.id, { password, email_confirm: true })
+      const { error } = await admin.auth.admin.updateUserById(user.id, { password: u.password ?? password, email_confirm: true })
       if (error) throw error
     } else {
-      const { data, error } = await admin.auth.admin.createUser({ email: u.email, password, email_confirm: true })
+      const { data, error } = await admin.auth.admin.createUser({ email: u.email, password: u.password ?? password, email_confirm: true })
       if (error) throw error
       user = data.user
     }

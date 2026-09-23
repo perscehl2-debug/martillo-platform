@@ -18,7 +18,9 @@ function LoginForm() {
     e.preventDefault()
     setError('')
     setLoading(true)
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    // Permite ingresar sólo con el usuario (ej. "prueba") para las cuentas de prueba.
+    const correo = email.includes('@') ? email.trim() : `${email.trim().toLowerCase()}@martillo-demo.cl`
+    const { error } = await supabase.auth.signInWithPassword({ email: correo, password })
     if (error) { setError(error.message); setLoading(false); return }
     router.push(redirect)
     router.refresh()
@@ -28,8 +30,8 @@ function LoginForm() {
     <div className="border border-white/10 rounded-xl p-8 bg-[#070b18]">
       <form onSubmit={handleLogin} className="space-y-4">
         <div>
-          <label className="text-xs text-gray-400 block mb-1.5">Email</label>
-          <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
+          <label className="text-xs text-gray-400 block mb-1.5">Email o usuario</label>
+          <input type="text" autoCapitalize="none" autoCorrect="off" value={email} onChange={e => setEmail(e.target.value)} required
             className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:border-[#c8902a] focus:outline-none transition-colors"
             placeholder="tu@email.com" />
         </div>
