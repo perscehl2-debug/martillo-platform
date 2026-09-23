@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js'
 
 // SINIESTROS_DEMO_USUARIOS (JSON [{email,nombre,rol,password}]) reemplaza la lista por defecto.
 const lista = process.env.SINIESTROS_DEMO_USUARIOS ? JSON.parse(process.env.SINIESTROS_DEMO_USUARIOS) : null
-const password = process.env.SINIESTROS_DEMO_PASSWORD ?? (lista ? 'por-usuario' : undefined)
+const password = process.env.SINIESTROS_DEMO_PASSWORD || (lista ? 'por-usuario' : undefined)
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL
 const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 if (!password || !url || !serviceKey) {
