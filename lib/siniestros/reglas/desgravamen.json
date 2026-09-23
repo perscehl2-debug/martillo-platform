@@ -1,0 +1,93 @@
+{
+  "producto": "DESGRAVAMEN",
+  "nombre": "Seguro de Desgravamen (ejemplo de extensibilidad — validar condiciones de la póliza)",
+  "version_reglas": "2026.1-ejemplo",
+  "regimenes_cobertura": [
+    {
+      "id": "general",
+      "nombre": "Condiciones generales (tope ilustrativo; usar la suma asegurada de la póliza)",
+      "topes_uf": { "saldo_insoluto": 10000 }
+    }
+  ],
+  "plazos": {
+    "aviso_dias": 30,
+    "liquidacion_dias_corridos": 45,
+    "pago_dias": 6,
+    "prescripcion_meses": 48,
+    "impugnacion_dias": 10
+  },
+  "catalogo_documentos": {
+    "cert_defuncion": {
+      "nombre": "Certificado de defunción",
+      "campos": [
+        { "id": "nombre_fallecido", "tipo": "texto", "descripcion": "Nombre del fallecido" },
+        { "id": "rut_fallecido", "tipo": "rut", "descripcion": "RUT del fallecido" },
+        { "id": "fecha_defuncion", "tipo": "fecha", "descripcion": "Fecha de defunción" },
+        { "id": "causa_muerte", "tipo": "texto", "descripcion": "Causa de muerte" }
+      ]
+    },
+    "cert_saldo_insoluto": {
+      "nombre": "Certificado de saldo insoluto del crédito a la fecha del siniestro",
+      "campos": [
+        { "id": "nombre_deudor", "tipo": "texto", "descripcion": "Nombre del deudor asegurado" },
+        { "id": "rut_deudor", "tipo": "rut", "descripcion": "RUT del deudor" },
+        { "id": "numero_credito", "tipo": "texto", "descripcion": "Número de operación de crédito" },
+        { "id": "saldo_insoluto_clp", "tipo": "numero", "descripcion": "Saldo insoluto en pesos a la fecha del siniestro" }
+      ]
+    },
+    "cert_medico_incapacidad": {
+      "nombre": "Dictamen de invalidez (≥ 2/3)",
+      "campos": [
+        { "id": "nombre_paciente", "tipo": "texto", "descripcion": "Nombre del evaluado" },
+        { "id": "rut_paciente", "tipo": "rut", "descripcion": "RUT del evaluado" },
+        { "id": "grado_incapacidad_pct", "tipo": "numero", "descripcion": "Porcentaje de invalidez (0-100)" }
+      ]
+    },
+    "cedula_victima": {
+      "nombre": "Cédula de identidad del asegurado",
+      "campos": [
+        { "id": "nombre", "tipo": "texto", "descripcion": "Nombre completo" },
+        { "id": "rut", "tipo": "rut", "descripcion": "RUN/RUT" }
+      ]
+    },
+    "declaracion_salud": {
+      "nombre": "Declaración personal de salud (DPS)",
+      "campos": [
+        { "id": "fecha_firma", "tipo": "fecha", "descripcion": "Fecha de firma" },
+        { "id": "preexistencias_declaradas", "tipo": "texto", "descripcion": "Preexistencias declaradas" }
+      ]
+    }
+  },
+  "coberturas": [
+    {
+      "id": "muerte",
+      "nombre": "Fallecimiento del deudor",
+      "tope_uf_ref": "saldo_insoluto",
+      "documentos": [
+        { "id": "cert_defuncion", "obligatorio": true },
+        { "id": "cert_saldo_insoluto", "obligatorio": true },
+        { "id": "declaracion_salud", "obligatorio": false }
+      ],
+      "reglas_calculo": {
+        "tipo": "monto_declarado",
+        "campo_monto": { "documento": "cert_saldo_insoluto", "campo": "saldo_insoluto_clp", "moneda": "CLP" }
+      }
+    },
+    {
+      "id": "itp",
+      "nombre": "Invalidez total y permanente 2/3",
+      "tope_uf_ref": "saldo_insoluto",
+      "documentos": [
+        { "id": "cert_medico_incapacidad", "obligatorio": true },
+        { "id": "cert_saldo_insoluto", "obligatorio": true },
+        { "id": "cedula_victima", "obligatorio": true }
+      ],
+      "reglas_calculo": {
+        "tipo": "monto_declarado",
+        "campo_monto": { "documento": "cert_saldo_insoluto", "campo": "saldo_insoluto_clp", "moneda": "CLP" }
+      }
+    }
+  ],
+  "exclusiones": ["suicidio_periodo_carencia", "preexistencia_no_declarada"],
+  "validaciones_cruzadas": ["rut_valido", "nombre_victima_consistente"]
+}

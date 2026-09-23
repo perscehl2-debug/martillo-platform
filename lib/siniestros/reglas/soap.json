@@ -1,0 +1,228 @@
+{
+  "producto": "SOAP",
+  "nombre": "Seguro Obligatorio de Accidentes Personales",
+  "ley": "18.490",
+  "version_reglas": "2026.1",
+  "variantes": [
+    { "id": "SOAP", "nombre": "SOAP (vehículo con patente chilena)", "poliza_cmf": "POL320260028" },
+    { "id": "SOAPEX", "nombre": "SOAPEX (vehículo con matrícula extranjera)", "poliza_cmf": "POL320260029" }
+  ],
+  "regimenes_cobertura": [
+    {
+      "id": "post_ley_jacinta",
+      "nombre": "Ley 21.797 (Ley Jacinta) — pólizas contratadas desde el 09-02-2026",
+      "vigente_desde": "2026-02-09",
+      "topes_uf": { "muerte": 600, "ipt": 600, "ipp_max": 400, "gastos_medicos": 600 },
+      "pago_dias_muerte": 7,
+      "pago_muerte_computo": "habiles"
+    },
+    {
+      "id": "pre_ley_jacinta",
+      "nombre": "Régimen anterior — pólizas contratadas hasta el 08-02-2026",
+      "vigente_hasta": "2026-02-08",
+      "topes_uf": { "muerte": 300, "ipt": 300, "ipp_max": 200, "gastos_medicos": 300 },
+      "pago_dias_muerte": 10,
+      "pago_muerte_computo": "corridos"
+    }
+  ],
+  "plazos": {
+    "aviso_dias": 30,
+    "liquidacion_dias_corridos": 45,
+    "pago_dias": 10,
+    "prescripcion_meses": 12,
+    "certificado_incapacidad_meses": 24,
+    "impugnacion_dias": 10,
+    "comunicacion_tipo_liquidacion_dias_habiles": 3,
+    "oposicion_liquidacion_directa_dias_habiles": 5,
+    "designacion_liquidador_dias_habiles": 2
+  },
+  "computo_plazos": {
+    "aviso_dias": "corridos",
+    "pago_dias": "corridos",
+    "impugnacion_dias": "corridos"
+  },
+  "catalogo_documentos": {
+    "cert_accidente": {
+      "nombre": "Certificado de accidente (Carabineros/Fiscalía/JPL)",
+      "campos": [
+        { "id": "fecha_accidente", "tipo": "fecha", "descripcion": "Fecha en que ocurrió el accidente" },
+        { "id": "lugar_accidente", "tipo": "texto", "descripcion": "Comuna/dirección del accidente" },
+        { "id": "patente", "tipo": "patente", "descripcion": "Placa patente del vehículo involucrado" },
+        { "id": "nombre_victima", "tipo": "texto", "descripcion": "Nombre completo de la víctima/lesionado" },
+        { "id": "rut_victima", "tipo": "rut", "descripcion": "RUT de la víctima" },
+        { "id": "numero_parte", "tipo": "texto", "descripcion": "Número de parte o causa" }
+      ]
+    },
+    "parte_policial": {
+      "nombre": "Copia parte policial completo (relato)",
+      "campos": [
+        { "id": "fecha_accidente", "tipo": "fecha", "descripcion": "Fecha del accidente" },
+        { "id": "patente", "tipo": "patente", "descripcion": "Placa patente del vehículo asegurado" },
+        { "id": "nombre_victima", "tipo": "texto", "descripcion": "Nombre de la víctima" },
+        { "id": "rut_victima", "tipo": "rut", "descripcion": "RUT de la víctima" },
+        { "id": "nombre_conductor", "tipo": "texto", "descripcion": "Nombre del conductor" },
+        { "id": "rut_conductor", "tipo": "rut", "descripcion": "RUT del conductor" },
+        { "id": "relato", "tipo": "texto", "descripcion": "Resumen breve del relato de los hechos" },
+        { "id": "indicio_exclusion", "tipo": "texto", "descripcion": "Si el relato menciona carrera/competencia, hecho fuera de Chile, sismo, suicidio o lesión autoinferida, descríbelo; si no, null" }
+      ]
+    },
+    "cert_defuncion": {
+      "nombre": "Certificado de defunción",
+      "campos": [
+        { "id": "nombre_fallecido", "tipo": "texto", "descripcion": "Nombre del fallecido" },
+        { "id": "rut_fallecido", "tipo": "rut", "descripcion": "RUT del fallecido" },
+        { "id": "fecha_defuncion", "tipo": "fecha", "descripcion": "Fecha de defunción" },
+        { "id": "causa_muerte", "tipo": "texto", "descripcion": "Causa de muerte" }
+      ]
+    },
+    "acredita_beneficiario": {
+      "nombre": "Documento que acredita beneficiario (matrimonio/nacimiento/posesión efectiva)",
+      "campos": [
+        { "id": "tipo_documento", "tipo": "texto", "descripcion": "matrimonio, nacimiento, acuerdo_union_civil o posesion_efectiva" },
+        { "id": "nombre_beneficiario", "tipo": "texto", "descripcion": "Nombre del beneficiario acreditado" },
+        { "id": "rut_beneficiario", "tipo": "rut", "descripcion": "RUT del beneficiario" },
+        { "id": "nombre_causante", "tipo": "texto", "descripcion": "Nombre del fallecido/causante" },
+        { "id": "parentesco", "tipo": "texto", "descripcion": "Parentesco con el fallecido" }
+      ]
+    },
+    "cedula_beneficiario": {
+      "nombre": "Cédula de identidad del beneficiario",
+      "campos": [
+        { "id": "nombre", "tipo": "texto", "descripcion": "Nombre completo" },
+        { "id": "rut", "tipo": "rut", "descripcion": "RUN/RUT" },
+        { "id": "fecha_nacimiento", "tipo": "fecha", "descripcion": "Fecha de nacimiento" }
+      ]
+    },
+    "cedula_victima": {
+      "nombre": "Cédula de identidad de la víctima",
+      "campos": [
+        { "id": "nombre", "tipo": "texto", "descripcion": "Nombre completo" },
+        { "id": "rut", "tipo": "rut", "descripcion": "RUN/RUT" },
+        { "id": "fecha_nacimiento", "tipo": "fecha", "descripcion": "Fecha de nacimiento" }
+      ]
+    },
+    "certificado_soap": {
+      "nombre": "Copia del certificado SOAP",
+      "campos": [
+        { "id": "numero_poliza", "tipo": "texto", "descripcion": "Número de póliza/certificado" },
+        { "id": "patente", "tipo": "patente", "descripcion": "Placa patente asegurada" },
+        { "id": "vigencia_desde", "tipo": "fecha", "descripcion": "Inicio de vigencia" },
+        { "id": "vigencia_hasta", "tipo": "fecha", "descripcion": "Término de vigencia" },
+        { "id": "fecha_contratacion", "tipo": "fecha", "descripcion": "Fecha de emisión/contratación" },
+        { "id": "aseguradora", "tipo": "texto", "descripcion": "Compañía aseguradora" }
+      ]
+    },
+    "cert_autopsia": {
+      "nombre": "Certificado de autopsia",
+      "campos": [
+        { "id": "nombre_fallecido", "tipo": "texto", "descripcion": "Nombre del fallecido" },
+        { "id": "causa_muerte", "tipo": "texto", "descripcion": "Causa de muerte" },
+        { "id": "alcoholemia", "tipo": "texto", "descripcion": "Resultado de alcoholemia si aparece" }
+      ]
+    },
+    "cert_medico_incapacidad": {
+      "nombre": "Certificado médico de naturaleza y grado de incapacidad",
+      "campos": [
+        { "id": "nombre_paciente", "tipo": "texto", "descripcion": "Nombre del paciente" },
+        { "id": "rut_paciente", "tipo": "rut", "descripcion": "RUT del paciente" },
+        { "id": "grado_incapacidad_pct", "tipo": "numero", "descripcion": "Porcentaje de pérdida de capacidad de trabajo (0-100)" },
+        { "id": "diagnostico", "tipo": "texto", "descripcion": "Diagnóstico" },
+        { "id": "medico_tratante", "tipo": "texto", "descripcion": "Nombre del médico tratante" },
+        { "id": "fecha_emision", "tipo": "fecha", "descripcion": "Fecha de emisión del certificado" }
+      ]
+    },
+    "epicrisis": {
+      "nombre": "Epicrisis/informe médico tratante",
+      "campos": [
+        { "id": "nombre_paciente", "tipo": "texto", "descripcion": "Nombre del paciente" },
+        { "id": "fecha_ingreso", "tipo": "fecha", "descripcion": "Fecha de ingreso" },
+        { "id": "fecha_alta", "tipo": "fecha", "descripcion": "Fecha de alta" },
+        { "id": "diagnostico", "tipo": "texto", "descripcion": "Diagnóstico" }
+      ]
+    },
+    "cert_compin": {
+      "nombre": "Resolución COMPIN (si hay discrepancia)",
+      "campos": [
+        { "id": "nombre_paciente", "tipo": "texto", "descripcion": "Nombre del evaluado" },
+        { "id": "grado_incapacidad_pct", "tipo": "numero", "descripcion": "Grado de incapacidad resuelto (0-100)" },
+        { "id": "fecha_resolucion", "tipo": "fecha", "descripcion": "Fecha de la resolución" }
+      ]
+    },
+    "boletas_facturas": {
+      "nombre": "Boletas/facturas/bonos originales a nombre de la víctima",
+      "extrae_comprobantes": true,
+      "campos": [
+        { "id": "prestador", "tipo": "texto", "descripcion": "Prestador principal" }
+      ]
+    },
+    "ordenes_recetas": {
+      "nombre": "Órdenes de exámenes y recetas",
+      "campos": [
+        { "id": "nombre_paciente", "tipo": "texto", "descripcion": "Nombre del paciente" },
+        { "id": "fecha", "tipo": "fecha", "descripcion": "Fecha de la orden/receta" }
+      ]
+    }
+  },
+  "coberturas": [
+    {
+      "id": "muerte",
+      "nombre": "Fallecimiento accidental",
+      "tope_uf_ref": "muerte",
+      "documentos": [
+        { "id": "cert_accidente", "obligatorio": true },
+        { "id": "parte_policial", "obligatorio": true },
+        { "id": "cert_defuncion", "obligatorio": true },
+        { "id": "acredita_beneficiario", "obligatorio": true },
+        { "id": "cedula_beneficiario", "obligatorio": true },
+        { "id": "certificado_soap", "obligatorio": false },
+        { "id": "cert_autopsia", "obligatorio": false }
+      ],
+      "reglas_calculo": { "tipo": "monto_fijo", "deducir_gastos_medicos": true }
+    },
+    {
+      "id": "ipt",
+      "nombre": "Incapacidad permanente total",
+      "tope_uf_ref": "ipt",
+      "documentos": [
+        { "id": "cert_accidente", "obligatorio": true },
+        { "id": "cert_medico_incapacidad", "nombre": "Certificado médico de naturaleza y grado (>66%)", "obligatorio": true },
+        { "id": "epicrisis", "obligatorio": false },
+        { "id": "cert_compin", "obligatorio": false },
+        { "id": "cedula_victima", "obligatorio": true }
+      ],
+      "reglas_calculo": { "tipo": "monto_fijo", "deducir_gastos_medicos": false }
+    },
+    {
+      "id": "ipp",
+      "nombre": "Incapacidad permanente parcial",
+      "tope_uf_ref": "ipp_max",
+      "documentos": [
+        { "id": "cert_accidente", "obligatorio": true },
+        { "id": "cert_medico_incapacidad", "nombre": "Certificado médico con grado 30%-66%", "obligatorio": true },
+        { "id": "cedula_victima", "obligatorio": true }
+      ],
+      "reglas_calculo": {
+        "tipo": "proporcional_grado",
+        "base_proporcion_ref": "ipt",
+        "cap_con_gastos_medicos": true,
+        "cap_con_gastos_medicos_ref": "ipt"
+      }
+    },
+    {
+      "id": "gastos_medicos",
+      "nombre": "Gastos médicos, hospitalarios y farmacéuticos",
+      "tope_uf_ref": "gastos_medicos",
+      "documentos": [
+        { "id": "cert_accidente", "obligatorio": true },
+        { "id": "boletas_facturas", "obligatorio": true },
+        { "id": "ordenes_recetas", "obligatorio": false },
+        { "id": "cedula_victima", "obligatorio": true }
+      ],
+      "reglas_calculo": { "tipo": "suma_comprobantes", "tope_uf_ref": "gastos_medicos" }
+    }
+  ],
+  "incapacidad": { "umbral_ipp": 0.30, "umbral_ipt": 0.6667 },
+  "banderas": { "poliza_cercana_accidente_dias": 30 },
+  "exclusiones": ["carreras", "fuera_territorio", "guerra_sismo_caso_fortuito", "suicidio", "lesion_autoinferida", "vehiculo_sin_soap_propietario"],
+  "validaciones_cruzadas": ["rut_valido", "patente_coincide", "fecha_accidente_dentro_vigencia", "fecha_dentro_prescripcion", "nombre_victima_consistente", "beneficiario_orden_prelacion", "boletas_a_nombre_victima", "suma_comprobantes_vs_tope"]
+}

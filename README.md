@@ -33,3 +33,12 @@ Agregar `KLING_API_KEY` en `.env.local`. Sin key, el sitio funciona con imágene
 npx vercel
 # Agregar variables de entorno en Vercel Dashboard
 ```
+
+## Módulo de siniestros (finiquitización SOAP)
+Plataforma interna para liquidación de siniestros SOAP (Ley 18.490) en `/siniestros`: checklist dinámico por reglas JSON, extracción con Claude, cálculo art. 26 en UF, plazos legales y emisión de informe/finiquito con aprobación de supervisor.
+Instalación, arquitectura, supuestos y pruebas: [`docs/siniestros/README.md`](docs/siniestros/README.md). Migración: `supabase/migrations/002_siniestros.sql`.
+
+```bash
+npm test          # pruebas unitarias
+npm run test:rls  # pruebas de RLS contra un Postgres local
+```

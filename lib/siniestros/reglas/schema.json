@@ -1,0 +1,147 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://martillo.cl/schemas/reglas-producto.json",
+  "title": "Reglas de producto de seguro",
+  "type": "object",
+  "required": ["producto", "nombre", "version_reglas", "regimenes_cobertura", "plazos", "catalogo_documentos", "coberturas"],
+  "additionalProperties": false,
+  "properties": {
+    "producto": { "type": "string", "pattern": "^[A-Z0-9_]+$" },
+    "nombre": { "type": "string", "minLength": 1 },
+    "ley": { "type": "string" },
+    "version_reglas": { "type": "string", "minLength": 1 },
+    "variantes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "nombre"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "nombre": { "type": "string" },
+          "poliza_cmf": { "type": "string" }
+        }
+      }
+    },
+    "regimenes_cobertura": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "topes_uf"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "nombre": { "type": "string" },
+          "vigente_desde": { "type": "string", "format": "date" },
+          "vigente_hasta": { "type": "string", "format": "date" },
+          "topes_uf": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": { "type": "number", "minimum": 0 }
+          },
+          "pago_dias_muerte": { "type": "integer", "minimum": 1 },
+          "pago_muerte_computo": { "enum": ["corridos", "habiles"] }
+        }
+      }
+    },
+    "plazos": {
+      "type": "object",
+      "additionalProperties": { "type": "integer", "minimum": 0 }
+    },
+    "computo_plazos": {
+      "type": "object",
+      "additionalProperties": { "enum": ["corridos", "habiles"] }
+    },
+    "catalogo_documentos": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["nombre", "campos"],
+        "additionalProperties": false,
+        "properties": {
+          "nombre": { "type": "string" },
+          "extrae_comprobantes": { "type": "boolean" },
+          "campos": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "tipo"],
+              "additionalProperties": false,
+              "properties": {
+                "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+                "tipo": { "enum": ["texto", "fecha", "numero", "rut", "patente"] },
+                "descripcion": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "coberturas": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "nombre", "tope_uf_ref", "documentos", "reglas_calculo"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+          "nombre": { "type": "string" },
+          "tope_uf_ref": { "type": "string" },
+          "documentos": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "obligatorio"],
+              "additionalProperties": false,
+              "properties": {
+                "id": { "type": "string" },
+                "nombre": { "type": "string" },
+                "obligatorio": { "type": "boolean" }
+              }
+            }
+          },
+          "reglas_calculo": {
+            "type": "object",
+            "required": ["tipo"],
+            "additionalProperties": false,
+            "properties": {
+              "tipo": { "enum": ["monto_fijo", "proporcional_grado", "suma_comprobantes", "monto_declarado"] },
+              "deducir_gastos_medicos": { "type": "boolean" },
+              "cap_con_gastos_medicos": { "type": "boolean" },
+              "cap_con_gastos_medicos_ref": { "type": "string" },
+              "base_proporcion_ref": { "type": "string" },
+              "tope_uf_ref": { "type": "string" },
+              "campo_monto": {
+                "type": "object",
+                "required": ["documento", "campo"],
+                "additionalProperties": false,
+                "properties": {
+                  "documento": { "type": "string" },
+                  "campo": { "type": "string" },
+                  "moneda": { "enum": ["CLP", "UF"] }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "incapacidad": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "umbral_ipp": { "type": "number", "minimum": 0, "maximum": 1 },
+        "umbral_ipt": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "banderas": {
+      "type": "object",
+      "additionalProperties": { "type": "number" }
+    },
+    "exclusiones": { "type": "array", "items": { "type": "string" } },
+    "validaciones_cruzadas": { "type": "array", "items": { "type": "string" } }
+  }
+}
