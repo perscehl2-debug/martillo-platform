@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/migrar-siniestros.mjs && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
-    "test:rls": "bash supabase/tests/run-rls-tests.sh"
+    "test:rls": "bash supabase/tests/run-rls-tests.sh",
+    "migrar:siniestros": "node scripts/migrar-siniestros.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.128.0",
