@@ -41,6 +41,11 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  // Protect /siniestros (el rol del módulo se valida en el layout y en cada API)
+  if (request.nextUrl.pathname.startsWith('/siniestros') && !user) {
+    return NextResponse.redirect(new URL(`/auth/login?redirect=${request.nextUrl.pathname}`, request.url))
+  }
+
   // Redirect logged-in users away from auth pages
   if (user && (
     request.nextUrl.pathname.startsWith('/auth/login') ||
@@ -53,5 +58,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/auth/:path*'],
+  matcher: ['/admin/:path*', '/auth/:path*', '/siniestros/:path*'],
 }
