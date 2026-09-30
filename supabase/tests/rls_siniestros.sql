@@ -188,3 +188,16 @@ SELECT pruebas.como('');
 SELECT pruebas.falla($$SELECT count(*) FROM public.casos_siniestro$$, 'anónimo sin acceso a casos');
 SELECT pruebas.falla($$SELECT count(*) FROM public.valores_uf$$, 'anónimo sin acceso a UF');
 RESET ROLE;
+
+-- ─── Pólizas (003) ─────────────────────────────────────────
+SET ROLE authenticated;
+SELECT pruebas.como('00000000-0000-0000-0000-00000000000d');
+SELECT pruebas.igual((SELECT count(*) FROM public.polizas), 4::BIGINT, 'módulo lee pólizas de demo');
+SELECT pruebas.igual((SELECT tomador ->> 'nombre' FROM public.polizas WHERE patente = 'KJTR45'), 'Juan Andrés Pérez Soto', 'póliza se encuentra por patente');
+SELECT pruebas.falla($$INSERT INTO public.polizas (numero, producto, fecha_contratacion, vigencia_desde, vigencia_hasta, patente, vehiculo, tomador) VALUES ('X', 'SOAP', '2026-01-01', '2026-01-01', '2026-12-31', 'AA1111', '{}', '{}')$$, 'administrativo no crea pólizas');
+SELECT pruebas.como('00000000-0000-0000-0000-00000000000e');
+SELECT pruebas.igual((SELECT count(*) FROM public.polizas), 0::BIGINT, 'usuario sin rol no ve pólizas');
+RESET ROLE;
+SET ROLE anon;
+SELECT pruebas.falla($$SELECT count(*) FROM public.polizas$$, 'anónimo sin acceso a pólizas');
+RESET ROLE;

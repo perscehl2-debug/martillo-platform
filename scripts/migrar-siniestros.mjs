@@ -1,4 +1,4 @@
-// Aplica supabase/migrations/002_siniestros.sql durante el build de Vercel
+// Aplica las migraciones del módulo (002 y 003) durante el build de Vercel
 // cuando existe SUPABASE_DB_PASSWORD (configurada sólo para el preview de la rama).
 // Idempotente: si las tablas ya existen no hace nada. Sin la variable, no hace nada.
 import { readFileSync } from 'node:fs'
@@ -36,15 +36,27 @@ async function conectar() {
 
 try {
   const db = await conectar()
-  const { rows } = await db.query("SELECT to_regclass('public.casos_siniestro') IS NOT NULL AS existe")
-  if (rows[0].existe) {
-    console.log('[migrar-siniestros] La migración ya estaba aplicada.')
-  } else {
-    const sql = readFileSync(new URL('../supabase/migrations/002_siniestros.sql', import.meta.url), 'utf8')
+  // Migraciones del módulo, en orden; cada una se salta si su tabla ya existe.
+  const MIGRACIONES = [
+    { archivo: '002_siniestros.sql', tabla: 'public.casos_siniestro' },
+    { archivo: '003_polizas.sql', tabla: 'public.polizas' },
+  ]
+  for (const m of MIGRACIONES) {
+    const { rows } = await db.query('SELECT to_regclass($1) IS NOT NULL AS existe', [m.tabla])
+    if (rows[0].existe) {
+      console.log(`[migrar-siniestros] ${m.archivo}: ya aplicada.`)
+      continue
+    }
+    const sql = readFileSync(new URL(`../supabase/migrations/${m.archivo}`, import.meta.url), 'utf8')
     await db.query('BEGIN')
-    await db.query(sql)
-    await db.query('COMMIT')
-    console.log('[migrar-siniestros] Migración 002_siniestros aplicada.')
+    try {
+      await db.query(sql)
+      await db.query('COMMIT')
+    } catch (e) {
+      await db.query('ROLLBACK')
+      throw e
+    }
+    console.log(`[migrar-siniestros] ${m.archivo}: aplicada.`)
   }
   const email = process.env.SINIESTROS_SUPERVISOR_EMAIL
   if (email) {
@@ -56,8 +68,8 @@ try {
     )
     console.log(r.rowCount ? `[migrar-siniestros] Supervisor activado: ${email}` : `[migrar-siniestros] ${email} aún no está registrado en auth.users`)
   }
-  const t = await db.query("SELECT count(*)::int AS n FROM information_schema.tables WHERE table_schema = 'public' AND table_name IN ('usuarios','casos_siniestro','personas','documentos','informes','valores_uf','auditoria')")
-  console.log(`[migrar-siniestros] Tablas del módulo presentes: ${t.rows[0].n}/7`)
+  const t = await db.query("SELECT count(*)::int AS n FROM information_schema.tables WHERE table_schema = 'public' AND table_name IN ('usuarios','casos_siniestro','personas','documentos','informes','valores_uf','auditoria','polizas')")
+  console.log(`[migrar-siniestros] Tablas del módulo presentes: ${t.rows[0].n}/8`)
   await db.end()
 } catch (e) {
   // No bloquea el build de la app; el error queda en el log.

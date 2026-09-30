@@ -1,0 +1,57 @@
+{
+  "_nota": "Pólizas de demostración (datos ficticios). También se cargan en la tabla polizas con supabase/migrations/003_polizas.sql; si la tabla aún no existe, la app usa este archivo.",
+  "polizas": [
+    {
+      "numero": "SOAP-2026-100245",
+      "producto": "SOAP",
+      "variante": "SOAP",
+      "aseguradora": "Aseguradora Demo S.A.",
+      "estado": "vigente",
+      "fecha_contratacion": "2026-03-15",
+      "vigencia_desde": "2026-04-01",
+      "vigencia_hasta": "2027-03-31",
+      "vehiculo": { "patente": "KJTR45", "marca": "Toyota", "modelo": "Yaris", "anio": 2019, "tipo": "Automóvil", "uso": "Particular" },
+      "tomador": { "nombre": "Juan Andrés Pérez Soto", "rut": "12345678-5", "email": "jperez@demo.cl", "telefono": "+56 9 1111 2222", "direccion": "Av. Alemania 0450, Temuco" },
+      "propietario": { "nombre": "Juan Andrés Pérez Soto", "rut": "12345678-5" }
+    },
+    {
+      "numero": "SOAP-2025-087311",
+      "producto": "SOAP",
+      "variante": "SOAP",
+      "aseguradora": "Aseguradora Demo S.A.",
+      "estado": "vigente",
+      "fecha_contratacion": "2025-03-20",
+      "vigencia_desde": "2025-04-01",
+      "vigencia_hasta": "2026-03-31",
+      "vehiculo": { "patente": "HXLP72", "marca": "Hyundai", "modelo": "Accent", "anio": 2016, "tipo": "Automóvil", "uso": "Particular" },
+      "tomador": { "nombre": "María José González Rojas", "rut": "11111111-1", "email": "mgonzalez@demo.cl", "telefono": "+56 9 3333 4444", "direccion": "Los Aromos 123, Padre Las Casas" },
+      "propietario": { "nombre": "María José González Rojas", "rut": "11111111-1" }
+    },
+    {
+      "numero": "SOAP-2026-100390",
+      "producto": "SOAP",
+      "variante": "SOAP",
+      "aseguradora": "Aseguradora Demo S.A.",
+      "estado": "vigente",
+      "fecha_contratacion": "2026-09-20",
+      "vigencia_desde": "2026-09-20",
+      "vigencia_hasta": "2027-03-31",
+      "vehiculo": { "patente": "LBFT31", "marca": "Chevrolet", "modelo": "Sail", "anio": 2021, "tipo": "Automóvil", "uso": "Transporte de pasajeros (taxi)" },
+      "tomador": { "nombre": "Transportes Cautín Ltda.", "rut": "76086428-5", "email": "contacto@cautin-demo.cl", "telefono": "+56 45 222 3344", "direccion": "Balmaceda 800, Temuco" },
+      "propietario": { "nombre": "Transportes Cautín Ltda.", "rut": "76086428-5" }
+    },
+    {
+      "numero": "SOAPEX-2026-000517",
+      "producto": "SOAP",
+      "variante": "SOAPEX",
+      "aseguradora": "Aseguradora Demo S.A.",
+      "estado": "vigente",
+      "fecha_contratacion": "2026-07-02",
+      "vigencia_desde": "2026-07-02",
+      "vigencia_hasta": "2026-10-31",
+      "vehiculo": { "patente": "AB123CD", "marca": "Volkswagen", "modelo": "Amarok", "anio": 2022, "tipo": "Camioneta", "uso": "Particular (matrícula argentina)" },
+      "tomador": { "nombre": "Martín Rodríguez", "rut": null, "email": "mrodriguez@demo.com.ar", "telefono": "+54 9 2944 55 6677", "direccion": "San Carlos de Bariloche, Argentina" },
+      "propietario": { "nombre": "Martín Rodríguez", "rut": null }
+    }
+  ]
+}

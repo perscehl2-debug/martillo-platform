@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { FormularioCaso } from '@/components/siniestros/FormularioCaso'
+import { AsistenteDenuncio } from '@/components/siniestros/AsistenteDenuncio'
 import { reglasVigentes, sesionSiniestros } from '@/lib/siniestros/servidor'
 
 export const dynamic = 'force-dynamic'
@@ -18,11 +18,9 @@ export default async function NuevoCaso() {
     <div className="max-w-4xl space-y-6">
       <div>
         <h1 className="text-2xl font-black text-white md:text-3xl">Nuevo denuncio</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Registra el siniestro. El régimen de topes se determina por la <strong className="text-gray-300">fecha de contratación de la póliza</strong> y el checklist se genera desde las reglas del producto.
-        </p>
+        <p className="mt-1 text-sm text-gray-500">Todo parte de la póliza: al encontrarla se cargan el vehículo, el tomador y el régimen de topes. Luego cada respuesta abre las siguientes preguntas y determina las coberturas.</p>
       </div>
-      <FormularioCaso reglas={reglas} liquidadores={liquidadores ?? []} rol={usuario.rol} />
+      <AsistenteDenuncio reglas={reglas} liquidadores={liquidadores ?? []} rol={usuario.rol} />
     </div>
   )
 }
