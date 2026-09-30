@@ -9,6 +9,7 @@ import type { ResultadoCalculo } from '@/lib/siniestros/calculo'
 import { resumirChecklist } from '@/lib/siniestros/checklist'
 import { formatearFecha, hoyIso } from '@/lib/siniestros/fechas'
 import { estadoPlazo } from '@/lib/siniestros/plazos'
+import { obtenerPoliza } from '@/lib/siniestros/polizas'
 import { resolverRegimen } from '@/lib/siniestros/reglas/consultas'
 import { formatearRut } from '@/lib/siniestros/rut'
 import { reglasDelCaso, sesionSiniestros, type CasoDb } from '@/lib/siniestros/servidor'
@@ -48,6 +49,7 @@ export default async function DetalleCaso({ params }: { params: { id: string } }
   if (!caso) notFound()
   const reglas = await reglasDelCaso(supabase, caso)
   const regimen = resolverRegimen(reglas, caso.poliza_fecha_contratacion)
+  const poliza = caso.poliza_numero ? await obtenerPoliza(supabase, caso.poliza_numero).catch(() => null) : null
 
   const [personas, requisitos, documentos, coberturas, plazos, analisis, informes, usuarios] = await Promise.all([
     supabase.from('personas').select('*').eq('caso_id', caso.id).order('created_at'),
@@ -95,6 +97,31 @@ export default async function DetalleCaso({ params }: { params: { id: string } }
 
       <div className="grid gap-6 xl:grid-cols-3">
         <div className="space-y-6 xl:col-span-2">
+          {poliza && (
+            <Tarjeta titulo={<>Póliza <span className="font-mono text-[#c8902a]">{poliza.numero}</span></>}>
+              <div className="grid gap-3 text-sm md:grid-cols-3">
+                <div>
+                  <p className="text-xs uppercase text-gray-500">Cobertura</p>
+                  <p className="text-gray-200">{poliza.variante ?? poliza.producto} · {poliza.aseguradora}</p>
+                  <p className="text-gray-400">Vigencia {formatearFecha(poliza.vigencia_desde)} a {formatearFecha(poliza.vigencia_hasta)}</p>
+                  <p className="text-gray-400">Contratada {formatearFecha(poliza.fecha_contratacion)}</p>
+                </div>
+                <div>
+                  <p className="text-xs uppercase text-gray-500">Vehículo</p>
+                  <p className="font-mono text-gray-200">{poliza.vehiculo.patente}</p>
+                  <p className="text-gray-400">{[poliza.vehiculo.marca, poliza.vehiculo.modelo, poliza.vehiculo.anio].filter(Boolean).join(' ')}</p>
+                  <p className="text-gray-400">{[poliza.vehiculo.tipo, poliza.vehiculo.uso].filter(Boolean).join(' · ')}</p>
+                </div>
+                <div>
+                  <p className="text-xs uppercase text-gray-500">Tomador</p>
+                  <p className="text-gray-200">{poliza.tomador.nombre}</p>
+                  <p className="text-gray-400">{poliza.tomador.rut ? `RUT ${formatearRut(poliza.tomador.rut)}` : 'Sin RUT chileno'}</p>
+                  <p className="text-gray-400">{[poliza.tomador.telefono, poliza.tomador.email].filter(Boolean).join(' · ')}</p>
+                </div>
+              </div>
+            </Tarjeta>
+          )}
+
           <Tarjeta titulo="Siniestro">
             <dl className="grid gap-x-6 gap-y-2 text-sm md:grid-cols-2">
               {[

@@ -19,5 +19,6 @@ trap cleanup EXIT
 PSQL=("${RUN_AS[@]}" "$PG_BIN/psql" -h "$DIR" -p "$PORT" -U postgres -d postgres -v ON_ERROR_STOP=1 -q -o /dev/null)
 "${PSQL[@]}" -f supabase_stub.sql
 "${PSQL[@]}" -f ../migrations/002_siniestros.sql
+"${PSQL[@]}" -f ../migrations/003_polizas.sql
 "${PSQL[@]}" -f rls_siniestros.sql
 echo "✓ Pruebas RLS de siniestros OK"
